@@ -28,7 +28,7 @@ class _First_PageState extends State<First_Page> {
               children: [
                 Center(
                   child: SizedBox(
-                    height: 40,
+                    height: 70,
                     child: ElevatedButton(
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
@@ -37,23 +37,23 @@ class _First_PageState extends State<First_Page> {
                         style: ElevatedButton.styleFrom(
                           primary: Colors.redAccent,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)
+                              borderRadius: BorderRadius.circular(30.0)
                           ),
                         ),
-                        child: Text("Voice Recognition",
+                        child: Text("Voice Commands",
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20
+                                fontSize: 25
                             )
                         )),
                   ),
                 ),
                 SizedBox(
-                  height: 25,
+                  height: 30,
                 ),
                 Center(
                   child: SizedBox(
-                    height: 40,
+                    height: 70,
                     child: ElevatedButton(
                         onPressed: () {
                           var snackBar = SnackBar(content: Text('Feature in development'));
@@ -62,13 +62,13 @@ class _First_PageState extends State<First_Page> {
                         style: ElevatedButton.styleFrom(
                           primary: Colors.redAccent,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)
+                              borderRadius: BorderRadius.circular(30.0)
                           ),
                         ),
-                        child: Text("Image Recognition",
+                        child: Text("Text Recognition",
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20
+                          fontSize: 25
                         )
                           )),
                   ),

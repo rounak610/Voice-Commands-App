@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(44, 119, 68, 1),
-        title: Text("Voice Recognition"),
+        title: Text("Voice Commands"),
         centerTitle: true,
         actions: [
           Builder(
