@@ -5,9 +5,11 @@ import 'package:sop/api/speech_api.dart';
 import 'package:sop/main.dart';
 import 'package:sop/widgets/substring_highlight.dart';
 import 'package:sop/utils.dart';
+import 'package:auto_reload/auto_reload.dart';
 
 class HomePage extends StatefulWidget {
   @override
+
   _HomePageState createState() => _HomePageState();
 }
 
@@ -16,6 +18,10 @@ class _HomePageState extends State<HomePage> {
   bool isListening = false;
 
   @override
+  void initState() {
+    super.initState();
+    //startAutoReload();
+  }
   Widget build(BuildContext context) =>
       Container(
         decoration: BoxDecoration(
