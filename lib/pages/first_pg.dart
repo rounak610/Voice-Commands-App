@@ -56,7 +56,9 @@ class _First_PageState extends State<First_Page> {
                     height: 70,
                     child: ElevatedButton(
                         onPressed: () {
-                          var snackBar = SnackBar(content: Text('Feature in development'));
+                          var snackBar = SnackBar(content: Text('Feature in development'),
+                            duration: Duration(milliseconds: 800),
+                          );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         },
                         style: ElevatedButton.styleFrom(
