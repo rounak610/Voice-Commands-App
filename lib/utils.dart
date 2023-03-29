@@ -32,8 +32,8 @@ Future<void> initTts() async {
 
 
 class Utils {
-  static void scanText(String rawText)
-  {
+  static Future<void> scanText(String rawText)
+  async {
     final text = rawText.toLowerCase();
 
     if (text.contains(Command.email))
@@ -54,26 +54,13 @@ class Utils {
     else if (text.contains(Command.contact))
     {
       final name = _getTextAfterCommand(text: text, command: Command.contact);
-      Iterable<Contact> _contacts = Null as Iterable<Contact>;
-      Future<void> getAllContacts() async
-      {
-        final List<Contact> contacts =
-        (await ContactsService.getContacts()).toList();
-        _contacts = contacts;
-      }
-        var num;
-        for (final element in _contacts)
-          {
-            if(element.displayName==name)
-              {
-                num = element.phones as String;
-                break;
-              }
-          }
-        if(num!=null)
-          {
-            callNum(body: num);
-          }
+      String? varnum = await getContactNumber(name);
+      String num = varnum ?? "";
+      if(num=="")
+        {
+          speak('Contact not found');
+        }
+      callNum(body: num);
     }
     else if(text.contains(Command.message))
     {
@@ -202,5 +189,13 @@ class Utils {
   static Future<void> speak(String message) async
   {
     await flutterTts.speak(message);
+  }
+
+  static Future<String?> getContactNumber(String nameQuery) async {
+    final Iterable<Contact> contacts = await ContactsService.getContacts();
+    final Contact? contact = contacts.firstWhere(
+          (contact) => contact.displayName?.toLowerCase().contains(nameQuery.toLowerCase()) ??false,
+    );
+    return contact?.phones?.isNotEmpty == true ? contact!.phones!.first.value : null;
   }
 }
