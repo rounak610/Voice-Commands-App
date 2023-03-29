@@ -72,11 +72,11 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: AvatarGlow(
         animate: isListening,
         endRadius: 75,
-        glowColor: Color.fromRGBO(117, 127, 154, 1),
+        glowColor: const Color.fromRGBO(117, 127, 154, 1),
         child: FloatingActionButton(
-          child: Icon(isListening ? Icons.mic : Icons.mic_none, size: 36),
           onPressed: toggleRecording,
-          backgroundColor: Color.fromRGBO(44, 119, 68, 1),
+          backgroundColor: const Color.fromRGBO(44, 119, 68, 1),
+          child: Icon(isListening ? Icons.mic : Icons.mic_none, size: 36),
         ),
       ),
     ),
