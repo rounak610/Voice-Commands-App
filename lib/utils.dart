@@ -216,7 +216,6 @@ class Utils {
     try {
       await TorchLight.enableTorch();
     } on Exception catch (_) {
-      //_showErrorMes('Could not enable Flashlight');
     }
   }
 
@@ -225,9 +224,7 @@ class Utils {
     try {
       await TorchLight.disableTorch();
     } on Exception catch (_) {
-     // _showErrorMes('Could not enable Flashlight');
     }
   }
-
 
 }
