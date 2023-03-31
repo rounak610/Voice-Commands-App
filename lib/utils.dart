@@ -5,9 +5,11 @@ import 'package:contacts_service/contacts_service.dart';
 import 'dart:developer';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:math';
+import 'package:camera/camera.dart';
+import 'package:torch_light/torch_light.dart';
 
 class Command {
-  static final all = [email, browser, call, contact, message, hello, time, roll];
+  static final all = [email, browser, call, contact, message, hello, time, roll, flash_on, flash_off];
   static const email = 'write email';
   static const browser = 'open';
   static const call = 'call';
@@ -16,6 +18,8 @@ class Command {
   static const hello = 'hello';
   static const time = 'time';
   static const roll = 'roll';
+  static const flash_on = 'turn on flashlight';
+  static const flash_off = 'turn off flashlight';
 }
 
 final FlutterTts flutterTts = FlutterTts();
@@ -87,6 +91,14 @@ class Utils {
         int r = min + rnd.nextInt(max - min);
         speak('You got $r');
       }
+    else if(text.contains(Command.flash_on))
+      {
+        _turnOnFlash();
+      }
+    else if(text.contains(Command.flash_off))
+    {
+      _turnOffFlash();
+    }
   }
 
   static String extract_body(String text)
@@ -198,4 +210,24 @@ class Utils {
     );
     return contact?.phones?.isNotEmpty == true ? contact!.phones!.first.value : null;
   }
+
+  static Future<void> _turnOnFlash() async
+  {
+    try {
+      await TorchLight.enableTorch();
+    } on Exception catch (_) {
+      //_showErrorMes('Could not enable Flashlight');
+    }
+  }
+
+  static Future<void> _turnOffFlash() async
+  {
+    try {
+      await TorchLight.disableTorch();
+    } on Exception catch (_) {
+     // _showErrorMes('Could not enable Flashlight');
+    }
+  }
+
+
 }
