@@ -7,11 +7,13 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:math';
 import 'package:camera/camera.dart';
 import 'package:torch_light/torch_light.dart';
+import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
+import 'package:device_apps/device_apps.dart';
 
 class Command {
-  static final all = [email, browser, call, contact, message, hello, time, roll, flash_on, flash_off];
+  static final all = [email, browser, call, contact, message, hello, time, roll, flash_on, flash_off, set_alarm, open, weather_status];
   static const email = 'write email';
-  static const browser = 'open';
+  static const browser = 'browse';
   static const call = 'call';
   static const contact = 'contact';
   static const message = 'message';
@@ -20,6 +22,9 @@ class Command {
   static const roll = 'roll';
   static const flash_on = 'turn on flashlight';
   static const flash_off = 'turn off flashlight';
+  static const set_alarm = 'set alarm';
+  static const open = 'open';
+  static const weather_status = "what's the weather status";
 }
 
 final FlutterTts flutterTts = FlutterTts();
@@ -47,7 +52,7 @@ class Utils {
     }
     else if (text.contains(Command.browser))
     {
-      final url = _getTextAfterCommand(text: text, command: Command.browser);
+     final url = _getTextAfterCommand(text: text, command: Command.browser);
       openLink(url: url);
     }
     else if (text.contains(Command.call))
@@ -99,6 +104,69 @@ class Utils {
     {
       _turnOffFlash();
     }
+    else if(text.contains(Command.set_alarm))
+      {
+        int hh = 0;
+        int mm = 0;
+        String temp =  "";
+        for(int i=text.length-1; i>=0; i--)
+        {
+          if(text[i]==":")
+          {
+            temp = reverseString(temp);
+            mm = int.parse(temp);
+            temp = "";
+          }
+          else if(text[i]==" ")
+          {
+            break;
+          }
+          else
+          {
+            temp = temp+text[i];
+          }
+
+        }
+        temp = reverseString(temp);
+        hh = int.parse(temp);
+
+        FlutterAlarmClock.createAlarm(hh, mm);
+      }
+    else if(text.contains(Command.open))
+      {
+        Map<String, String> mp =
+        {
+          'paytm':'net.one97.paytm',
+          'gallery':'com.miui.gallery',
+          'whatsapp':'com.whatsapp',
+        };
+        final app_name = _getTextAfterCommand(text: text, command: Command.open);
+        final link = mp[app_name];
+        Application? app = await DeviceApps.getApp('${link}');
+        bool isInstalled = await DeviceApps.isAppInstalled('${link}');
+        if(isInstalled==true)
+          {
+            DeviceApps.openApp('${link}');
+          }
+        else
+          {
+            throw 'error';
+          }
+      }
+    else if(text.contains(Command.weather_status))
+      {
+        final link = 'com.miui.weather2';
+        Application? app = await DeviceApps.getApp('${link}');
+        bool isInstalled = await DeviceApps.isAppInstalled('${link}');
+        if(isInstalled==true)
+        {
+          DeviceApps.openApp('${link}');
+        }
+        else
+        {
+          throw 'error';
+        }
+      }
   }
 
   static String extract_body(String text)
@@ -225,6 +293,13 @@ class Utils {
       await TorchLight.disableTorch();
     } on Exception catch (_) {
     }
+  }
+
+  static String reverseString(String input) {
+    List<int> codeUnits = input.codeUnits;
+    List<int> reversedCodeUnits = codeUnits.reversed.toList();
+    String reversedString = String.fromCharCodes(reversedCodeUnits);
+    return reversedString;
   }
 
 }

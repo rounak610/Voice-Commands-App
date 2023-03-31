@@ -47,6 +47,8 @@ dependencies:
   auto_reload: ^1.1.0
   camera: ^0.10.3+2
   torch_light: ^0.3.0
+  flutter_alarm_clock: ^0.0.2
+  device_apps: ^2.2.0
 
 
 dev_dependencies:
