@@ -62,13 +62,20 @@ class Utils {
     }
     else if (text.contains(Command.contact))
     {
-      final name = _getTextAfterCommand(text: text, command: Command.contact);
-      String? varnum = await getContactNumber(name);
-      String num = varnum ?? "";
-      if(num=="")
-        {
-          speak('Contact not found');
-        }
+      String name = _getTextAfterCommand(text: text, command: Command.contact);
+      name = name.toLowerCase();
+      // String? varnum = await getContactNumber(name);
+      // String num = varnum ?? "";
+      // if(num=="")
+      //   {
+      //     speak('Contact not found');
+      //   }
+      String num = "";
+      Map<String, int> mp = {
+        "sample":1234,
+        "abcd":5678
+      };
+      num = mp[name].toString();
       callNum(body: num);
     }
     else if(text.contains(Command.message))
@@ -271,15 +278,30 @@ class Utils {
     await flutterTts.speak(message);
   }
 
-  static Future<String?> getContactNumber(String nameQuery) async {
-    final Iterable<Contact> contacts = await ContactsService.getContacts();
-    final Contact? contact = contacts.firstWhere(
-          (contact) => contact.displayName?.toLowerCase().contains(nameQuery.toLowerCase()) ??false,
-    );
-    return contact?.phones?.isNotEmpty == true ? contact!.phones!.first.value : null;
-  }
+  // static Future<String?> getContactNumber(String nameQuery) async {
+  //   final Iterable<Contact> contacts = await ContactsService.getContacts();
+  //   final Contact? contact = contacts.firstWhere(
+  //         (contact) => contact.displayName?.toLowerCase().contains(nameQuery.toLowerCase()) ??false,
+  //   );
+  //   return contact?.phones?.isNotEmpty == true ? contact!.phones!.first.value : null;
+  // }
 
-  static Future<void> _turnOnFlash() async
+  // static Future<String?> getContactNumber(String nameQuery) async {
+  //   nameQuery = nameQuery.toLowerCase();
+  //   final Iterable<Contact> contacts = await ContactsService.getContacts();
+  //   Contact? ans = null;
+  //   for(final x in contacts)
+  //     {
+  //       if(x.displayName?.toLowerCase() == nameQuery)
+  //         {
+  //           ans = x;
+  //           break;
+  //         }
+  //     }
+  //   return ans?.phones?.isNotEmpty == true ? ans!.phones!.first.value : null;
+  // }
+
+   static Future<void> _turnOnFlash() async
   {
     try {
       await TorchLight.enableTorch();
