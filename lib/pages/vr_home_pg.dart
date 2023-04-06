@@ -5,7 +5,6 @@ import 'package:sop/api/speech_api.dart';
 import 'package:sop/main.dart';
 import 'package:sop/widgets/substring_highlight.dart';
 import 'package:sop/utils.dart';
-import 'package:auto_reload/auto_reload.dart';
 
 class HomePage extends StatefulWidget {
   @override

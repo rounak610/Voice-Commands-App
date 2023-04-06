@@ -11,6 +11,7 @@ import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
+
 class Command {
   static final all = [email, browser, call, contact, message, hello, time, roll, flash_on, flash_off, set_alarm, open, weather_status, bluetooth_on, bluetooth_off];
   static const email = 'write email';

@@ -44,7 +44,6 @@ dependencies:
   contacts_service: ^0.6.3
   permission_handler: ^10.2.0
   flutter_tts: ^3.6.3
-  auto_reload: ^1.1.0
   camera: ^0.10.3+2
   torch_light: ^0.3.0
   flutter_alarm_clock: ^0.0.2
