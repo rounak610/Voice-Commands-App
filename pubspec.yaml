@@ -49,6 +49,7 @@ dependencies:
   torch_light: ^0.3.0
   flutter_alarm_clock: ^0.0.2
   device_apps: ^2.2.0
+  flutter_blue_plus: ^1.4.0
 
 
 dev_dependencies:

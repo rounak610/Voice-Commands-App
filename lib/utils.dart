@@ -9,9 +9,10 @@ import 'package:camera/camera.dart';
 import 'package:torch_light/torch_light.dart';
 import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 import 'package:device_apps/device_apps.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
 class Command {
-  static final all = [email, browser, call, contact, message, hello, time, roll, flash_on, flash_off, set_alarm, open, weather_status];
+  static final all = [email, browser, call, contact, message, hello, time, roll, flash_on, flash_off, set_alarm, open, weather_status, bluetooth_on, bluetooth_off];
   static const email = 'write email';
   static const browser = 'browse';
   static const call = 'call';
@@ -25,6 +26,8 @@ class Command {
   static const set_alarm = 'set alarm';
   static const open = 'open';
   static const weather_status = "what's the weather status";
+  static const bluetooth_on = 'turn on bluetooth';
+  static const bluetooth_off = 'turn off bluetooth';
 }
 
 final FlutterTts flutterTts = FlutterTts();
@@ -174,6 +177,14 @@ class Utils {
           throw 'error';
         }
       }
+    else if(text.contains(Command.bluetooth_on))
+      {
+        turnOnBluetooth();
+      }
+    else if(text.contains(Command.bluetooth_off))
+      {
+        turnOffBluetooth();
+      }
   }
 
   static String extract_body(String text)
@@ -317,11 +328,72 @@ class Utils {
     }
   }
 
-  static String reverseString(String input) {
+  static String reverseString(String input)
+  {
     List<int> codeUnits = input.codeUnits;
     List<int> reversedCodeUnits = codeUnits.reversed.toList();
     String reversedString = String.fromCharCodes(reversedCodeUnits);
     return reversedString;
+  }
+
+  static Future<void> turnOnBluetooth() async {
+    FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
+    bool isAvailable = await flutterBlue.isAvailable;
+    if (isAvailable)
+    {
+      bool isOn = await flutterBlue.isOn;
+      if (!isOn)
+      {
+        await flutterBlue.turnOn();
+        isOn = await flutterBlue.isOn;
+        if (isOn)
+        {
+          print('Bluetooth turned on successfully.');
+        }
+        else
+        {
+          print('Failed to turn on Bluetooth.');
+        }
+      }
+      else
+      {
+        speak('Bluetooth is already turned on');
+      }
+    }
+    else
+    {
+      print('Bluetooth is not available on this device.');
+    }
+  }
+
+  static Future<void> turnOffBluetooth() async {
+    FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
+    bool isAvailable = await flutterBlue.isAvailable;
+    if (isAvailable)
+    {
+      bool isOn = await flutterBlue.isOn;
+      if (isOn)
+      {
+        await flutterBlue.turnOff();
+        isOn = await flutterBlue.isOn;
+        if (!isOn)
+        {
+          print('Bluetooth turned off successfully.');
+        }
+        else
+        {
+          print('Failed to turn off Bluetooth.');
+        }
+      }
+      else
+      {
+        speak('Bluetooth is already turned off');
+      }
+    }
+    else
+    {
+      print('Bluetooth is not available on this device.');
+    }
   }
 
 }
